@@ -15,5 +15,8 @@ Any value defined here will override the pom.xml file value but is only applicab
 -->
         <netbeans.checkstyle.format>true</netbeans.checkstyle.format>
         <netbeans.hint.license>apache20</netbeans.hint.license>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.tab-size>4</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.tab-size>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.expand-tabs>false</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.expand-tabs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.continuationIndentSize>4</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.continuationIndentSize>
     </properties>
 </project-shared-configuration>
