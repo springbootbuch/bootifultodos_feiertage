@@ -1,0 +1,50 @@
+/*
+ * Copyright 2016 michael-simons.eu.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package de.bootifultodos.feiertage;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.Repository;
+
+/**
+ * Dieses Repository speichert deutsche Bundesländer.
+ *
+ * @author Michael J. Simons, 2016-11-30
+ */
+interface BundeslandRepository extends Repository<Bundesland, String> {
+
+    /**
+     * @return Eine Liste aller Bundesländer.
+     */
+    List<Bundesland> findAll();
+
+    /**
+     * @param nummer Die Nummer des gesuchten Bundeslandes
+     * @return Das Bundesland mit der Nummer {@code nummer}
+     */
+    Optional<Bundesland> findOneByNummer(String nummer);
+
+    /**
+     * No need to write  <code>this.mongoTemplate.find(query(where("feiertage").is(feiertag)), Bundesland.class)</code> just
+     * to get a nice method name.
+     *
+     * @param feiertag
+     * @return Liste aller Bundesländer, in denen der Feiertag {@code feiertag} gilt
+     */
+    @Query("{'feiertage': ?0}")
+    List<Bundesland> findAllByFeiertag(String feiertag);
+}
