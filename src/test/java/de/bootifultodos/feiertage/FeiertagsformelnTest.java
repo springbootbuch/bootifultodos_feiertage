@@ -35,45 +35,45 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class FeiertagsformelnTest {
 
-    @Parameters
-    public static Collection<Object[]> data() {
-        final Function<Integer, LocalDate> berechneOstersonntag = new FeiertagsBerechnung.Ostersonntag();
-        final Function<Integer, LocalDate> berechneBussUndBettag = new FeiertagsBerechnung.BussUndBettag();
-        
-        return Arrays.asList(new Object[][]{
-            {berechneOstersonntag, 1979, LocalDate.of(1979, 4, 15)},
-            {berechneOstersonntag, 2015, LocalDate.of(2015, 4, 5)},
-            {berechneOstersonntag, 2016, LocalDate.of(2016, 3, 27)},
-            {berechneOstersonntag, 2017, LocalDate.of(2017, 4, 16)},
-            {berechneOstersonntag, 2018, LocalDate.of(2018, 4, 1)},
-            {berechneOstersonntag, 2019, LocalDate.of(2019, 4, 21)},
-            {berechneOstersonntag, 2020, LocalDate.of(2020, 4, 12)},
-            {berechneBussUndBettag, 2015, LocalDate.of(2015, 11, 18)},
-            {berechneBussUndBettag, 2016, LocalDate.of(2016, 11, 16)},
-            {berechneBussUndBettag, 2017, LocalDate.of(2017, 11, 22)},
-            {berechneBussUndBettag, 2018, LocalDate.of(2018, 11, 21)},
-            {berechneBussUndBettag, 2019, LocalDate.of(2019, 11, 20)},
-            {berechneBussUndBettag, 2020, LocalDate.of(2020, 11, 18)},
-            {berechneBussUndBettag, 2021, LocalDate.of(2021, 11, 17)},
-            {berechneBussUndBettag, 2022, LocalDate.of(2022, 11, 16)},
-            {berechneBussUndBettag, 2023, LocalDate.of(2023, 11, 22)}
-        });
-    }
+	@Parameters
+	public static Collection<Object[]> data() {
+		final Function<Integer, LocalDate> berechneOstersonntag = new FeiertagsBerechnung.Ostersonntag();
+		final Function<Integer, LocalDate> berechneBussUndBettag = new FeiertagsBerechnung.BussUndBettag();
 
-    private final Function<Integer, LocalDate> function;
-    
-    private final int jahr;
+		return Arrays.asList(new Object[][]{
+			{berechneOstersonntag, 1979, LocalDate.of(1979, 4, 15)},
+			{berechneOstersonntag, 2015, LocalDate.of(2015, 4, 5)},
+			{berechneOstersonntag, 2016, LocalDate.of(2016, 3, 27)},
+			{berechneOstersonntag, 2017, LocalDate.of(2017, 4, 16)},
+			{berechneOstersonntag, 2018, LocalDate.of(2018, 4, 1)},
+			{berechneOstersonntag, 2019, LocalDate.of(2019, 4, 21)},
+			{berechneOstersonntag, 2020, LocalDate.of(2020, 4, 12)},
+			{berechneBussUndBettag, 2015, LocalDate.of(2015, 11, 18)},
+			{berechneBussUndBettag, 2016, LocalDate.of(2016, 11, 16)},
+			{berechneBussUndBettag, 2017, LocalDate.of(2017, 11, 22)},
+			{berechneBussUndBettag, 2018, LocalDate.of(2018, 11, 21)},
+			{berechneBussUndBettag, 2019, LocalDate.of(2019, 11, 20)},
+			{berechneBussUndBettag, 2020, LocalDate.of(2020, 11, 18)},
+			{berechneBussUndBettag, 2021, LocalDate.of(2021, 11, 17)},
+			{berechneBussUndBettag, 2022, LocalDate.of(2022, 11, 16)},
+			{berechneBussUndBettag, 2023, LocalDate.of(2023, 11, 22)}
+		});
+	}
 
-    private final LocalDate expected;
+	private final Function<Integer, LocalDate> function;
 
-    public FeiertagsformelnTest(final Function<Integer, LocalDate> functionUnderTest, final int jahr, final LocalDate expected) {
-        this.function = functionUnderTest;
-        this.jahr = jahr;
-        this.expected = expected;
-    }
+	private final int jahr;
 
-    @Test
-    public void formelShouldWork() {
-        assertThat(this.function.apply(jahr), is(equalTo(expected)));
-    }
+	private final LocalDate expected;
+
+	public FeiertagsformelnTest(final Function<Integer, LocalDate> functionUnderTest, final int jahr, final LocalDate expected) {
+		this.function = functionUnderTest;
+		this.jahr = jahr;
+		this.expected = expected;
+	}
+
+	@Test
+	public void formelShouldWork() {
+		assertThat(this.function.apply(jahr), is(equalTo(expected)));
+	}
 }

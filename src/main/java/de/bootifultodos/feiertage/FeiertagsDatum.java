@@ -15,6 +15,7 @@
  */
 package de.bootifultodos.feiertage;
 
+import de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag;
 import java.time.LocalDate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,7 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @EqualsAndHashCode
 public final class FeiertagsDatum {
-    private final String kuerzel;
 
-    private final LocalDate datum;
+	private final GesetzlicherFeiertag feiertag;
+
+	private final LocalDate datum;
 }

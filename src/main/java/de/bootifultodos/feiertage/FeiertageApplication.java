@@ -26,7 +26,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class FeiertageApplication {
 
-    public static void main(final String... args) {
-        SpringApplication.run(FeiertageApplication.class, args);
-    }
+	public static void main(final String... args) {
+		SpringApplication.run(FeiertageApplication.class, args);
+	}
 }

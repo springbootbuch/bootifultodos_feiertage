@@ -167,7 +167,7 @@
                 <configuration>
                     <excludes>
                         <!-- Application starter -->
-                        <exclude>de/bootifultodos/feiertage/Application.class</exclude>
+                        <exclude>de/bootifultodos/feiertage/FeiertageApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -192,12 +192,12 @@
                                         <limit implementation="org.jacoco.report.check.Limit">
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.95</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>COMPLEXITY</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.85</minimum>
+                                            <minimum>0.70</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

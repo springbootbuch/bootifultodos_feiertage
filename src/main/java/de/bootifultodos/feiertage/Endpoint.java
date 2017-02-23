@@ -15,9 +15,7 @@
  */
 package de.bootifultodos.feiertage;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,60 +26,45 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Michael J. Simons, 2016-12-07
  */
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class Endpoint {
 
-    static class Views {
+	/**
+	 * Eine Exception für den Fall, dass ein Bundesland nicht gefunden wird. Sie
+	 * ist annotiert mit einem {@link ResponseStatus} so dass kein expliziter
+	 * {@code ControllerAdvice} benötigt wird.
+	 */
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	static class BundeslandNotFoundException
+		extends RuntimeException {
 
-        interface Bundeslaender {
-        }
+		private static final long serialVersionUID = 1L;
+	}
 
-        interface Feiertage {
-        }
-    }
+	private final BundeslandRepository bundeslandRepository;
 
-    /**
-     * Eine Exception für den Fall, dass ein Bundesland nicht gefunden wird. Sie
-     * ist annotiert mit einem {@link ResponseStatus} so dass kein expliziter
-     * {@code ControllerAdvice} benötigt wird.
-     *
-     * @author Michael J. Simons, 2016-12-01
-     */
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    static class BundeslandNotFoundException extends RuntimeException {
+	private final FeiertagsBerechnung feiertagsBerechnung;
 
-        private static final long serialVersionUID = -6246450301614989163L;
-    }
+	/**
+	 * @return Eine Liste aller Bundesländer.
+	 */
+	@GetMapping("/bundeslaender")
+	public List<Bundesland> bundeslaender() {
+		return this.bundeslandRepository.findAll();
+	}
 
-    private final BundeslandRepository bundeslandRepository;
-
-    private final FeiertagRepository feiertagRepository;
-
-    private final FeiertagsBerechnung feiertagsBerechnung;
-
-    /**
-     * @return Eine Liste aller Bundesländer.
-     */
-    @JsonView(Views.Bundeslaender.class)
-    @GetMapping("/bundeslaender")
-    public List<Bundesland> bundeslaender() {
-        return this.bundeslandRepository.findAll();
-    }
-
-    @JsonView(Views.Feiertage.class)
-    @GetMapping("/feiertage")
-    public List<Feiertag> feiertage() {
-        return this.feiertagRepository.findAll().stream()
-                .map(f -> new Feiertag(f, this.bundeslandRepository.findAllByFeiertag(f)))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/feiertage/{jahr}/{bundeslandnummer}")
-    public List<FeiertagsDatum> feiertage(@PathVariable final int jahr, @PathVariable final String bundeslandnummer) {
-        return this.bundeslandRepository
-                .findOneByNummer(bundeslandnummer)
-                .map(b -> this.feiertagsBerechnung.berechneFeiertage(b, jahr))
-                .orElseThrow(BundeslandNotFoundException::new);
-    }
+	@GetMapping("/feiertage/{jahr}/{bundeslandnummer}")
+	public List<FeiertagsDatum> feiertage(
+		@PathVariable final int jahr,
+		@PathVariable final short bundeslandnummer
+	) {
+		return this.bundeslandRepository
+			.findOneByNummer(bundeslandnummer)
+			.map(bundesland ->
+				this.feiertagsBerechnung
+					.feiertageIn(bundesland, jahr)
+			)
+			.orElseThrow(BundeslandNotFoundException::new);
+	}
 }

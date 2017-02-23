@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Beinhaltet den Bootifultodos Feiertagservice zur Berechnung gesetzlicher,
  * deutscher Feiertage.

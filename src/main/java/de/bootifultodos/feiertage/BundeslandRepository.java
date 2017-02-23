@@ -27,24 +27,26 @@ import org.springframework.data.repository.Repository;
  */
 interface BundeslandRepository extends Repository<Bundesland, String> {
 
-    /**
-     * @return Eine Liste aller Bundesländer.
-     */
-    List<Bundesland> findAll();
+	/**
+	 * @return Eine Liste aller Bundesländer.
+	 */
+	List<Bundesland> findAll();
 
-    /**
-     * @param nummer Die Nummer des gesuchten Bundeslandes
-     * @return Das Bundesland mit der Nummer {@code nummer}
-     */
-    Optional<Bundesland> findOneByNummer(String nummer);
+	/**
+	 * @param nummer Die Nummer des gesuchten Bundeslandes
+	 * @return Das Bundesland mit der Nummer {@code nummer}
+	 */
+	Optional<Bundesland> findOneByNummer(short nummer);
 
-    /**
-     * No need to write  <code>this.mongoTemplate.find(query(where("feiertage").is(feiertag)), Bundesland.class)</code> just
-     * to get a nice method name.
-     *
-     * @param feiertag
-     * @return Liste aller Bundesländer, in denen der Feiertag {@code feiertag} gilt
-     */
-    @Query("{'feiertage': ?0}")
-    List<Bundesland> findAllByFeiertag(String feiertag);
+	/**
+	 * No need to write
+	 * <code>this.mongoTemplate.find(query(where("feiertage").is(feiertag)), Bundesland.class)</code>
+	 * just to get a nice method name.
+	 *
+	 * @param feiertag
+	 * @return Liste aller Bundesländer, in denen der Feiertag {@code feiertag}
+	 * gilt
+	 */
+	@Query("{'feiertage': ?0}")
+	List<Bundesland> findAllByFeiertag(String feiertag);
 }

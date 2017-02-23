@@ -15,9 +15,11 @@
  */
 package de.bootifultodos.feiertage;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import de.bootifultodos.feiertage.Endpoint.Views;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,30 +38,72 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "bundeslaender")
 public final class Bundesland {
 
-    /**
-     * Die MongoDB interne ID. Soll nicht nach außen gegeben werden.
-     */
-    @Getter(AccessLevel.NONE)
-    private final String id;
+	/**
+	 * Eine Aufzählung aller gesetzlichen Feiertage in Deutschland.
+	 */
+	public enum GesetzlicherFeiertag {
+		Neujahr(Month.JANUARY, 1),
+		HeiligeDreiKoenige(Month.JANUARY, 6),
+		Karfreitag(-2),
+		Ostermontag(1),
+		Maifeiertag(Month.MAY, 1),
+		ChristiHimmelfahrt(39),
+		Pfingstmontag(50),
+		Fronleichnam(60),
+		MariaeHimmelfahrt(Month.AUGUST, 15),
+		TagDerDeutschenEinheit(Month.OCTOBER, 3),
+		Reformationstag(Month.OCTOBER, 31),
+		Allerheiligen(Month.NOVEMBER, 1),
+		BussUndBettag(e -> new FeiertagsBerechnung.BussUndBettag().apply(e.getYear())),
+		Weihnachtstag1(Month.DECEMBER, 25),
+		Weihnachtstag2(Month.DECEMBER, 26);
 
-    /**
-     * Bundeslandnummer laut amtlichen Gemeindeschlüssel.
-     */
-    private final String nummer;
+		/**
+		 * Funktion, die ausgehend von Ostersonntag das Datum des Feiertags
+		 * berechnet.
+		 */
+		final UnaryOperator<LocalDate> op;
 
-    /**
-     * Offizielles Kürzel des Bundeslandes.
-     */
-    private final String kuerzel;
+		GesetzlicherFeiertag(final Integer offset) {
+			this(e -> e.plusDays(offset));
+		}
 
-    /**
-     * Offizieller Name des Bundeslandes.
-     */
-    private final String name;
+		GesetzlicherFeiertag(final Month month, final int day) {
+			this(e -> MonthDay.of(month, day).atYear(e.getYear()));
+		}
 
-    /**
-     * Die Liste der gesetzlichen Feiertage, die in diesem Bundesland gelten.
-     */
-    @JsonView(Views.Bundeslaender.class)
-    private final List<String> feiertage;
+		GesetzlicherFeiertag(final UnaryOperator<LocalDate> compute) {
+			this.op = compute;
+		}
+
+		FeiertagsDatum compute(final LocalDate ostersonntagsDatum) {
+			return new FeiertagsDatum(this, this.op.apply(ostersonntagsDatum));
+		}
+	}
+
+	/**
+	 * Die MongoDB interne ID. Soll nicht nach außen gegeben werden.
+	 */
+	@Getter(AccessLevel.NONE)
+	private final String id;
+
+	/**
+	 * Bundeslandnummer laut amtlichen Gemeindeschlüssel.
+	 */
+	private final short nummer;
+
+	/**
+	 * Offizielles Kürzel des Bundeslandes.
+	 */
+	private final String kuerzel;
+
+	/**
+	 * Offizieller Name des Bundeslandes.
+	 */
+	private final String name;
+
+	/**
+	 * Die Liste der gesetzlichen Feiertage, die in diesem Bundesland gelten.
+	 */
+	private final List<GesetzlicherFeiertag> feiertage;
 }
