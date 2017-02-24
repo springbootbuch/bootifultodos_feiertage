@@ -36,6 +36,9 @@ public class MigrationTest {
 	
 	@Test
 	public void bundeslaenderShouldExist() {
-		assertThat(bundeslandRepository.findAll().size(), is(equalTo(16)));
+		assertThat(
+			bundeslandRepository.findAll().size(), 
+			is(equalTo(16))
+		);
 	}
 }
