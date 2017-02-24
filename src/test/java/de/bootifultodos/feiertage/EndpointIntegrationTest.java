@@ -17,6 +17,7 @@ package de.bootifultodos.feiertage;
 
 import static de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag.Neujahr;
 import java.util.Arrays;
+import static java.util.Arrays.asList;
 import java.util.Optional;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -67,13 +68,14 @@ public class EndpointIntegrationTest {
 	private BundeslandRepository bundeslandRepository;
 
 	private final Bundesland nrw = new Bundesland(
-		"n/a", (short) 5, "NW", "Nordrhein-Westfalen",
-		Arrays.asList(Bundesland.GesetzlicherFeiertag.values())
+		(short) 5,
+		"NW", "Nordrhein-Westfalen",
+		asList(Bundesland.GesetzlicherFeiertag.values())
 	);
 
 	@Test
-	public void invalidBundeslandShouldWork() 
-		throws Exception 
+	public void invalidBundeslandShouldWork()
+		throws Exception
 	{
 		when(bundeslandRepository
 			.findOneByNummer((short) 23)
@@ -81,12 +83,12 @@ public class EndpointIntegrationTest {
 
 		mockMvc
 			.perform(get(
-				"/feiertage/{jahr}/{bundeslandnummer}", 
+				"/feiertage/{jahr}/{bundeslandnummer}",
 				2017, 23
 			))
 			.andExpect(status().isNotFound());
 	}
-	
+
 	@Test
 	public void feiertageShouldWork() throws Exception {
 		when(bundeslandRepository
@@ -95,7 +97,7 @@ public class EndpointIntegrationTest {
 
 		mockMvc
 			.perform(get(
-				"/feiertage/{jahr}/{bundeslandnummer}", 
+				"/feiertage/{jahr}/{bundeslandnummer}",
 				2017, 5
 			))
 			.andExpect(status().isOk())
@@ -119,20 +121,20 @@ public class EndpointIntegrationTest {
 				)))
 			;
 	}
-	
+
 	@Test
 	public void bundeslaenderShouldWork() throws Exception {
 		when(bundeslandRepository
 			.findAll()
 		).thenReturn(Arrays.asList(nrw));
-		
+
 		mockMvc
-			.perform(get("/bundeslaender"))				
+			.perform(get("/bundeslaender"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$", hasSize(1)))
 			.andDo(document("bundeslaender/get",
 				preprocessRequest(prettyPrint()),
-				preprocessResponse(prettyPrint()),				
+				preprocessResponse(prettyPrint()),
 				responseFields(
 					fieldWithPath("[]")
 						.description("Liste aller Bundesländer"),

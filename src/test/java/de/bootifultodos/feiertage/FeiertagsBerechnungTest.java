@@ -22,9 +22,12 @@ import java.util.List;
 import org.junit.Test;
 
 import static de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag.*;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Michael J. Simons, 2016-12-07
@@ -51,11 +54,10 @@ public class FeiertagsBerechnungTest {
 	}
 
 	@Test
-	public void feiertageInShouldWork() {
-		final Bundesland bundesland = new Bundesland(
-			"n/a", (short)-1, "fiktiv", "fiktiv",
-			Arrays.asList(GesetzlicherFeiertag.values())
-		);
+	public void feiertageInShouldWork() {		
+		final Bundesland bundesland = mock(Bundesland.class);
+		when(bundesland.getFeiertage())
+			.thenReturn(asList(GesetzlicherFeiertag.values()));	
 
 		final List<FeiertagsDatum> expectedFeiertage
 			= getExpectedFeiertage();

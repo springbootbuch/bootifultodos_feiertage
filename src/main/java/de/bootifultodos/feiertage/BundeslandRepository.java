@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 michael-simons.eu.
+ * Copyright 2016-2017 michael-simons.eu.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package de.bootifultodos.feiertage;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -37,16 +36,4 @@ interface BundeslandRepository extends Repository<Bundesland, String> {
 	 * @return Das Bundesland mit der Nummer {@code nummer}
 	 */
 	Optional<Bundesland> findOneByNummer(short nummer);
-
-	/**
-	 * No need to write
-	 * <code>this.mongoTemplate.find(query(where("feiertage").is(feiertag)), Bundesland.class)</code>
-	 * just to get a nice method name.
-	 *
-	 * @param feiertag
-	 * @return Liste aller Bundesländer, in denen der Feiertag {@code feiertag}
-	 * gilt
-	 */
-	@Query("{'feiertage': ?0}")
-	List<Bundesland> findAllByFeiertag(String feiertag);
 }

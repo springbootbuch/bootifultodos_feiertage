@@ -15,15 +15,27 @@
  */
 package de.bootifultodos.feiertage;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.MonthDay;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 /**
  * Repräsentiert deutsche Bundesländer. Die Bundeslandnummer ist im amtlichen
@@ -33,10 +45,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  * @author Michael J. Simons, 2016-11-30
  */
-@AllArgsConstructor
+@SuppressWarnings({"checkstyle:designforextension"})
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Document(collection = "bundeslaender")
-public final class Bundesland {
+@Entity
+@Immutable
+@Table(name = "bundeslaender")
+public class Bundesland implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Eine Aufzählung aller gesetzlichen Feiertage in Deutschland.
@@ -82,28 +99,38 @@ public final class Bundesland {
 	}
 
 	/**
-	 * Die MongoDB interne ID. Soll nicht nach außen gegeben werden.
-	 */
-	@Getter(AccessLevel.NONE)
-	private final String id;
-
-	/**
 	 * Bundeslandnummer laut amtlichen Gemeindeschlüssel.
 	 */
-	private final short nummer;
+	@Id
+	private short nummer;
 
 	/**
 	 * Offizielles Kürzel des Bundeslandes.
 	 */
-	private final String kuerzel;
+	private String kuerzel;
 
 	/**
 	 * Offizieller Name des Bundeslandes.
 	 */
-	private final String name;
+	private String name;
 
 	/**
 	 * Die Liste der gesetzlichen Feiertage, die in diesem Bundesland gelten.
 	 */
-	private final List<GesetzlicherFeiertag> feiertage;
+	@ElementCollection(targetClass = GesetzlicherFeiertag.class)
+	@CollectionTable(name = "bundeslaender_feiertage", joinColumns = @JoinColumn(name = "bundesland_nummer"))
+	@Column(name = "gesetzlicher_feiertag", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private List<GesetzlicherFeiertag> feiertage;
+
+	public Bundesland(final short nummer, final String kuerzel, final String name, final List<GesetzlicherFeiertag> feiertage) {
+		this.nummer = nummer;
+		this.kuerzel = kuerzel;
+		this.name = name;
+		this.feiertage = new ArrayList<>(feiertage);
+	}
+
+	public List<GesetzlicherFeiertag> getFeiertage() {
+		return Collections.unmodifiableList(this.feiertage);
+	}
 }
