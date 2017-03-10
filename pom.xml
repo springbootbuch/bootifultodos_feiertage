@@ -2,6 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.2.RELEASE</version>
+        <relativePath/>
+    </parent>
+
     <groupId>de.bootifultodos</groupId>
     <artifactId>feiertage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -9,16 +16,18 @@
 
     <name>Bootifultodos: Feiertage</name>
     <description>Stellt eine REST API bereit, um Bundesländer und die in ihnen geltenden Feiertage abzufragen sowie die Daten von Feiertagen in einem Jahr zu berechnen.</description>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
-    </parent>
-
+    <url>http://bootifultodos.de</url>
     <inceptionYear>2016</inceptionYear>
+    <organization>
+        <name>michael-simons.eu</name>
+        <url>http://michael-simons.eu</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -26,18 +35,6 @@
             <email>michael@simons.ac</email>
         </developer>
     </developers>
-
-    <organization>
-        <name>michael-simons.eu</name>
-        <url>http://michael-simons.eu</url>
-    </organization>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
 
     <properties>
         <java.version>1.8</java.version>
