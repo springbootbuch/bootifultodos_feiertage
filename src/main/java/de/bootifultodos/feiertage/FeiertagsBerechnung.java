@@ -104,7 +104,7 @@ class FeiertagsBerechnung {
 		final LocalDate ostersonntagsDatum
 			= this.ostersonntag.apply(jahr);
 		return bundesland.getFeiertage().stream()
-			.map(gf -> gf.compute(ostersonntagsDatum))
+			.map(f -> f.ausgehendVom(ostersonntagsDatum))
 			.sorted(comparing(FeiertagsDatum::getDatum))
 			.collect(toList());
 	}

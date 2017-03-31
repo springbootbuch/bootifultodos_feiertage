@@ -93,7 +93,7 @@ public class Bundesland implements Serializable {
 			this.op = compute;
 		}
 
-		FeiertagsDatum compute(final LocalDate ostersonntagsDatum) {
+		FeiertagsDatum ausgehendVom(final LocalDate ostersonntagsDatum) {
 			return new FeiertagsDatum(this, this.op.apply(ostersonntagsDatum));
 		}
 	}
