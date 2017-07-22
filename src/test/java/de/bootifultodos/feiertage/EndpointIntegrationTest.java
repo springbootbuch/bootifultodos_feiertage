@@ -83,7 +83,7 @@ public class EndpointIntegrationTest {
 
 		mockMvc
 			.perform(get(
-				"/feiertage/{jahr}/{bundeslandnummer}",
+				"/api/feiertage/{jahr}/{bundeslandnummer}",
 				2017, 23
 			))
 			.andExpect(status().isNotFound());
@@ -97,7 +97,7 @@ public class EndpointIntegrationTest {
 
 		mockMvc
 			.perform(get(
-				"/feiertage/{jahr}/{bundeslandnummer}",
+				"/api/feiertage/{jahr}/{bundeslandnummer}",
 				2017, 5
 			))
 			.andExpect(status().isOk())
@@ -129,7 +129,7 @@ public class EndpointIntegrationTest {
 		).thenReturn(Arrays.asList(nrw));
 
 		mockMvc
-			.perform(get("/bundeslaender"))
+			.perform(get("/api/bundeslaender"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$", hasSize(1)))
 			.andDo(document("bundeslaender/get",
