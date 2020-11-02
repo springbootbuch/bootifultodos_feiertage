@@ -15,19 +15,18 @@
  */
 package de.bootifultodos.feiertage;
 
+import static de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag.*;
+import static java.util.Arrays.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
 
-import static de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag.*;
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Michael J. Simons, 2016-12-07
@@ -68,8 +67,7 @@ public class FeiertagsBerechnungTest {
 			= service.feiertageIn(bundesland, 2017);
 
 		assertThat(
-			feiertage,
-			is(equalTo(expectedFeiertage))
-		);
+			feiertage)
+			.isEqualTo(expectedFeiertage);
 	}
 }

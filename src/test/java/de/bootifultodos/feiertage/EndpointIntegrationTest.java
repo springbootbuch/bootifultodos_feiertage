@@ -21,8 +21,8 @@ import static java.util.Arrays.asList;
 import java.util.Optional;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -39,7 +39,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Michael J. Simons, 2017-02-20
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(includeFilters
 	= @ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE,

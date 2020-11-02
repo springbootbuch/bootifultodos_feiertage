@@ -15,19 +15,18 @@
  */
 package de.bootifultodos.feiertage;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author Michael J. Simons, 2017-02-24
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class MigrationTest {
 	
@@ -37,8 +36,7 @@ public class MigrationTest {
 	@Test
 	public void bundeslaenderShouldExist() {
 		assertThat(
-			bundeslandRepository.findAll().size(), 
-			is(equalTo(16))
-		);
+			bundeslandRepository.findAll())
+			.hasSize(16);
 	}
 }
