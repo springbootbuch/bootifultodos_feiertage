@@ -66,8 +66,7 @@ public class FeiertagsBerechnungTest {
 		final List<FeiertagsDatum> feiertage
 			= service.feiertageIn(bundesland, 2017);
 
-		assertThat(
-			feiertage)
+		assertThat(feiertage)
 			.isEqualTo(expectedFeiertage);
 	}
 }
