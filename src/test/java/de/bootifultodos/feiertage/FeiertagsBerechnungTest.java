@@ -35,21 +35,21 @@ public class FeiertagsBerechnungTest {
 
 	List<FeiertagsDatum> getExpectedFeiertage() {
 		return Arrays.asList(
-			new FeiertagsDatum(Neujahr, LocalDate.of(2017, 1, 1)),
-			new FeiertagsDatum(HeiligeDreiKoenige, LocalDate.of(2017, 1, 6)),
-			new FeiertagsDatum(Karfreitag, LocalDate.of(2017, 4, 14)),
-			new FeiertagsDatum(Ostermontag, LocalDate.of(2017, 4, 17)),
-			new FeiertagsDatum(Maifeiertag, LocalDate.of(2017, 5, 1)),
-			new FeiertagsDatum(ChristiHimmelfahrt, LocalDate.of(2017, 5, 25)),
-			new FeiertagsDatum(Pfingstmontag, LocalDate.of(2017, 6, 5)),
-			new FeiertagsDatum(Fronleichnam, LocalDate.of(2017, 6, 15)),
-			new FeiertagsDatum(MariaeHimmelfahrt, LocalDate.of(2017, 8, 15)),
-			new FeiertagsDatum(TagDerDeutschenEinheit, LocalDate.of(2017, 10, 3)),
-			new FeiertagsDatum(Reformationstag, LocalDate.of(2017, 10, 31)),
-			new FeiertagsDatum(Allerheiligen, LocalDate.of(2017, 11, 1)),
-			new FeiertagsDatum(BussUndBettag, LocalDate.of(2017, 11, 22)),
-			new FeiertagsDatum(Weihnachtstag1, LocalDate.of(2017, 12, 25)),
-			new FeiertagsDatum(Weihnachtstag2, LocalDate.of(2017, 12, 26)));
+			new FeiertagsDatum(Neujahr, LocalDate.of(2021, 1, 1)),
+			new FeiertagsDatum(HeiligeDreiKoenige, LocalDate.of(2021, 1, 6)),
+			new FeiertagsDatum(Karfreitag, LocalDate.of(2021, 4, 2)),
+			new FeiertagsDatum(Ostermontag, LocalDate.of(2021, 4, 5)),
+			new FeiertagsDatum(Maifeiertag, LocalDate.of(2021, 5, 1)),
+			new FeiertagsDatum(ChristiHimmelfahrt, LocalDate.of(2021, 5, 13)),
+			new FeiertagsDatum(Pfingstmontag, LocalDate.of(2021, 5, 24)),
+			new FeiertagsDatum(Fronleichnam, LocalDate.of(2021, 6, 3)),
+			new FeiertagsDatum(MariaeHimmelfahrt, LocalDate.of(2021, 8, 15)),
+			new FeiertagsDatum(TagDerDeutschenEinheit, LocalDate.of(2021, 10, 3)),
+			new FeiertagsDatum(Reformationstag, LocalDate.of(2021, 10, 31)),
+			new FeiertagsDatum(Allerheiligen, LocalDate.of(2021, 11, 1)),
+			new FeiertagsDatum(BussUndBettag, LocalDate.of(2021, 11, 17)),
+			new FeiertagsDatum(Weihnachtstag1, LocalDate.of(2021, 12, 25)),
+			new FeiertagsDatum(Weihnachtstag2, LocalDate.of(2021, 12, 26)));
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class FeiertagsBerechnungTest {
 		final FeiertagsBerechnung service
 			= new FeiertagsBerechnung();
 		final List<FeiertagsDatum> feiertage
-			= service.feiertageIn(bundesland, 2017);
+			= service.feiertageIn(bundesland, 2021);
 
 		assertThat(feiertage)
 			.isEqualTo(expectedFeiertage);

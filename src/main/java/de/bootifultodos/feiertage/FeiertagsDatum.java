@@ -15,8 +15,9 @@
  */
 package de.bootifultodos.feiertage;
 
-import de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag;
 import java.time.LocalDate;
+
+import de.bootifultodos.feiertage.Bundesland.GesetzlicherFeiertag;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
